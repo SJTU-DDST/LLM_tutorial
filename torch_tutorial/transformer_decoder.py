@@ -31,7 +31,7 @@ class DecoderBlock(nn.Module):
         return x
 
 class SimpleGPT(nn.Module):
-    def __init__(self, vocab_size, d_model=64, n_heads=4, num_layers=2, dim_ff=128, max_len=32):
+    def __init__(self, vocab_size, d_model=64, n_heads=4, num_layers=2, dim_ff=128, max_len=16):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, d_model)
         self.pos_embed = nn.Parameter(torch.zeros(1, max_len, d_model))
@@ -41,7 +41,7 @@ class SimpleGPT(nn.Module):
         self.lm_head = nn.Linear(d_model, vocab_size)
 
     def generate_square_subsequent_mask(self, sz):
-        # (seq, seq) 下三角mask，防止看到未来token
+        # (seq, seq) 
         mask = torch.triu(torch.ones(sz, sz) * float('-inf'), diagonal=1)
         return mask
 
